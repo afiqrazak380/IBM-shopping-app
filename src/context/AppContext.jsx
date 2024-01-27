@@ -35,21 +35,31 @@ export const AppReducer = (state, action) => {
       };
     //#2
     case 'RED_QUANTITY':
-      state.expense.map((expense) => {
+      state.expenses.map((expense) => {
         if (expense.name === action.payload.name) {
           expense.quantity = expense.quantity - action.payload.quantity;
         }
         expense.quantity = expense.quantity < 0 ? 0 : expense.quantity;
       });
-      state.expense = new_expenses;
+      state.expenses = new_expenses;
       action.type = 'DONE';
       return {
         ...state,
       };
+    // state.expenses.map((expense) => {
+    //   if (expense.name === action.payload.name) {
+    //     expense.quantity = Math.max(
+    //       0,
+    //       expense.quantity - action.payload.quantity
+    //     );
+    //   }
+    //   // Remove this line
+    //   // expense.quantity = expense.quantity < 0 ? 0 : expense.quantity;
+    // });
     //#3
     case 'DELETE_ITEM':
       state.expenses.map((expense) => {
-        if (expense.name === action.pauload.name) {
+        if (expense.name === action.payload.name) {
           expense.quantity = 0;
         }
         new_expenses.push(expense);
@@ -75,9 +85,9 @@ export const AppReducer = (state, action) => {
 // 1. Initial State: Defines the initial state of the app when it loads
 const inititalState = {
   expenses: [
-    { id: 'Shirt', name: 'Shirt', quantity: 0, unitprice: 500 },
-    { id: 'Jeans', name: 'Jeans', quantity: 0, unitprice: 300 },
-    { id: 'Dress', name: 'Dress', quantity: 0, unitprice: 400 },
+    { id: 'Shirt', name: 'Shirt', quantity: 1, unitprice: 500 },
+    { id: 'Jeans', name: 'Jeans', quantity: 2, unitprice: 300 },
+    { id: 'Dress', name: 'Dress', quantity: 0.5, unitprice: 400 },
     { id: 'Dinner set', name: 'Dinner set', quantity: 0, unitprice: 600 },
     { id: 'Bags', name: 'Bags', quantity: 0, unitprice: 200 },
   ],
@@ -85,7 +95,7 @@ const inititalState = {
 };
 
 // 2. Context Creation: Creates the context for components to access the state
-export const AppContex = createContext();
+export const AppContext = createContext();
 
 // 3. Provider component - wraps the components we want to give access to the state
 // Accepts the children, which are the nested (wrapped) components
@@ -104,7 +114,7 @@ export const AppProvider = (props) => {
 
   // Render JSX element
   return (
-    <AppContex.Provider
+    <AppContext.Provider
       value={{
         expenses: state.expenses,
         CartValue: state.CartValue,
@@ -113,7 +123,7 @@ export const AppProvider = (props) => {
       }}
     >
       {props.children}
-    </AppContex.Provider>
+    </AppContext.Provider>
   );
 };
 
