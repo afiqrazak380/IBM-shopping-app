@@ -29,12 +29,11 @@ export const AppReducer = (state, action) => {
         });*/
       });
       state.expenses = new_expenses;
-      action.type = 'Done';
       return {
         ...state,
       };
     //#2
-    case 'RED_QUANTITY':
+    case 'REDUCE_QUANTITY':
       state.expenses.map((expense) => {
         if (expense.name === action.payload.name) {
           expense.quantity = expense.quantity - action.payload.quantity;
@@ -42,7 +41,6 @@ export const AppReducer = (state, action) => {
         expense.quantity = expense.quantity < 0 ? 0 : expense.quantity;
       });
       state.expenses = new_expenses;
-      action.type = 'DONE';
       return {
         ...state,
       };
@@ -66,13 +64,11 @@ export const AppReducer = (state, action) => {
         return true;
       });
       state.expenses = new_expenses;
-      action.type = 'DONE';
       return {
         ...state,
       };
     //#4
     case 'CHG_LOCATION':
-      action.type = 'DONE';
       state.Location = action.payload;
       return {
         ...state,
@@ -85,10 +81,10 @@ export const AppReducer = (state, action) => {
 // 1. Initial State: Defines the initial state of the app when it loads
 const inititalState = {
   expenses: [
-    { id: 'Shirt', name: 'Shirt', quantity: 1, unitprice: 500 },
-    { id: 'Jeans', name: 'Jeans', quantity: 2, unitprice: 300 },
-    { id: 'Dress', name: 'Dress', quantity: 0.5, unitprice: 400 },
-    { id: 'Dinner set', name: 'Dinner set', quantity: 0, unitprice: 600 },
+    { id: 'Shirt', name: 'Shirt', quantity: 0, unitprice: 70 },
+    { id: 'Jeans', name: 'Jeans', quantity: 0, unitprice: 130 },
+    { id: 'Dress', name: 'Dress', quantity: 0, unitprice: 60 },
+    { id: 'Blouse', name: 'Blouse', quantity: 0, unitprice: 40 },
     { id: 'Bags', name: 'Bags', quantity: 0, unitprice: 200 },
   ],
   Location: '£',
